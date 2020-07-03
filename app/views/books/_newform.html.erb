@@ -1,15 +1,24 @@
 <%= form_for(book) do |f| %>
 	<div class="field row">
-		<%= f.label :title %>
+
+　<% if book.errors.any? %>
+   <h3><%= book.errors.count %>errors prohibited this book from being saved:</h3>
+     <ul>
+    <% book.errors.full_messages.each do |message|%>
+     <li><%= message %></li>
+   <% end %>
+  </ul>
+ <% end %>
+		<%= f.label :Title %>
 		<%= f.text_field :title, class: "col-xs-12 book_title" %>
-	</div>
+     	</div>
 
-	<div class="field row">
-		<%= f.label :body %>
+ 	<div class="field row">
+ 		<%= f.label :Opinion %>
 		<%= f.text_area :body, class: "col-xs-12 book_body" %>
-	</div>
+     	</div>
 
-	<div class="actions row">
-		<%= f.submit "Create Book",class: "btn btn-primary col-xs-12" %>
-	</div>
-<% end %>
+ 	<div class="actions row">
+ 		<%= f.submit "Create Book",class: "btn btn-primary col-xs-12" %>
+ 	</div>
+ <% end %>
