@@ -1,7 +1,7 @@
 <%= form_for(book) do |f| %>
 	<div class="field row">
 
-　<% if book.errors.any? %>
+<% if book.errors.any? %>
    <h3><%= book.errors.count %>errors prohibited this book from being saved:</h3>
      <ul>
     <% book.errors.full_messages.each do |message|%>

@@ -3,7 +3,30 @@
 
 		<h1>Editing Book</h1>
 
-		<%= render "books/newform", book: @book %>
+		<%= form_for(@book) do |f| %>
+		<div class="field row">
+
+        <% if @book.errors.any? %>
+        <h3><%=@book.errors.count %>errors prohibited this book from being saved:</h3>
+        <ul>
+        <% @book.errors.full_messages.each do |message|%>
+        <li><%= message %></li>
+        <% end %>
+        </ul>
+        <% end %>
+		<%= f.label :Title %>
+		<%= f.text_field :title, class: "col-xs-12 book_title" %>
+     	</div>
+
+ 	<div class="field row">
+ 		<%= f.label :Opinion %>
+		<%= f.text_area :body, class: "col-xs-12 book_body" %>
+     	</div>
+
+ 	<div class="actions row">
+ 		<%= f.submit "Update Book",class: "btn btn-primary col-xs-12" %>
+ 	</div>
+ <% end %>
 		<%= link_to "Show", book_path(@book), class: "book_#{@book.id}" %>
 		<%= link_to "Back", books_path, class: "back" %>
 
