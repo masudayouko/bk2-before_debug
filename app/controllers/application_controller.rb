@@ -14,5 +14,15 @@ class ApplicationController < ActionController::Base
   def after_sign_in_path_for(resource)
     user_path(current_user.id)
   end
+  
+   def counts(user)
+    @count_microposts = user.microposts.count
+    @count_followings = user.followings.count
+    @count_followers = user.followers.count
+  end
+
+
+
+
 
 end
