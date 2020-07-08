@@ -24,11 +24,26 @@
 		<tr>
 			<td><%= attachment_image_tag(user, :profile_image, :fill, 40, 40, fallback: "no_image.jpg",size: "60x60") %></td>
 			<td><%= user.name %></td>
-			<td></td>
-			<td><%= form_for(current_user.relationships.build) do |f| %>
-            <%= hidden_field_tag :follow_id, user.id %>
-            <%= f.submit 'Follow', class: 'btn btn-primary btn-block' %>
-            <% end %></td>
+
+			<td>フォロー数:<%= user.followings.count %></td>
+			<td>フォロワー数:<%= user.followers.count %></td>
+			<% unless current_user == user %>
+              <% if current_user.following?(user) %>
+               <td><%= form_for(current_user.relationships.find_by(follow_id: user.id), html: { method: :delete }) do |f| %>
+               <%= hidden_field_tag :follow_id, user.id %>
+               <%= f.submit 'Unfollow', class: 'btn btn-danger btn-block' %>
+               </td>
+              <% end %>
+              <% else %>
+               <td>
+               <%= form_for(current_user.relationships.build) do |f| %>
+               <%= hidden_field_tag :follow_id, user.id %>
+               <%= f.submit 'Follow', class: 'btn btn-primary btn-block' %>
+               </td>
+               <% end %>
+              <% end %>
+            <% end %>
+
 			<td><%= link_to "Show", user_path(user.id)%></td>
 		</tr>
 		<% end %>

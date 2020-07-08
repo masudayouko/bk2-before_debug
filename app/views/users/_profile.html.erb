@@ -12,17 +12,30 @@
 	<tr>
 		<th>introduction</th>
 		<th><%= user.introduction %></th>
+	<tr>
+		<th>follows</th>
+		<th><%= user.followings.count %></th>
+	<tr>
+		<th>followers</th>
+        <th><%= user.followers.count %></th>
 		<% unless current_user == user %>
+		<% if current_user.following?(user) %>
+		<br>
 
         <%= form_for(current_user.relationships.find_by(follow_id: user.id), html: { method: :delete }) do |f| %>
-        <th><%= hidden_field_tag :follow_id, user.id %></th>
-        <th><%= f.submit 'Unfollow', class: 'btn btn-danger btn-block' %></th>
+     <tr>
+     	<th><%= hidden_field_tag :follow_id, user.id %></th>
+        <th><%= f.submit 'フォローを外す', class: 'btn btn-danger btn-block' %></th>
+    </tr>
         <% end %>
         <% else %>
+    <tr>
         <%= form_for(current_user.relationships.build) do |f| %>
-         <%= hidden_field_tag :follow_id, user.id %>
-         <%= f.submit 'Follow', class: 'btn btn-primary btn-block' %>
+         <th><%= hidden_field_tag :follow_id, user.id %></th>
+         <th><%= f.submit 'フォローする', class: 'btn btn-primary btn-block' %></th>
+    </tr>
 
+       <% end %>
        <% end %>
       <% end %>
 	</tr></tbody>
