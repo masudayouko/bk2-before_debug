@@ -14,10 +14,10 @@
 		<th><%= user.introduction %></th>
 	<tr>
 		<th>follows</th>
-		<th><%= user.followings.count %></th>
+		<th><%= link_to relationships_follow_path(user_id: user.id) do  %><%= user.followings.count %><% end %></th>
 	<tr>
 		<th>followers</th>
-        <th><%= user.followers.count %></th>
+        <th><%= link_to relationships_follower_path(user_id: user.id) do %><%= user.followers.count %><% end %></th>
 		<% unless current_user == user %>
 		<% if current_user.following?(user) %>
 		<br>
@@ -34,6 +34,8 @@
          <th><%= hidden_field_tag :follow_id, user.id %></th>
          <th><%= f.submit 'フォローする', class: 'btn btn-primary btn-block' %></th>
     </tr>
+
+
 
        <% end %>
        <% end %>
